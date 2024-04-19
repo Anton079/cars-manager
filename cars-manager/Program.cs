@@ -1,7 +1,10 @@
-﻿internal class Program
+﻿using cars_manager;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        UserService userService = new UserService();
+        userService.AfisareUser();
     }
 }

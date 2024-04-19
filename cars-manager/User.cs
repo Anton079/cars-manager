@@ -9,12 +9,22 @@ namespace cars_manager
 {
     public class User
     {
-        private string _id;
+        private int _id;
         private string _email;
         private string _password;
         private int _phone;
 
-        public User(string Id, string Email, string Password, int Phone)
+        public User(String proprietati)
+        {
+            String[] tokens = proprietati.Split(',');
+
+            this._id = int.Parse(tokens[0]);
+            this._email = tokens[1];
+            this._password = tokens[2];
+            this._phone = int.Parse(tokens[3]);
+        }
+
+        public User(int Id, string Email, string Password, int Phone)
         {
             Id = id;
             Email = email;
@@ -22,7 +32,7 @@ namespace cars_manager
             Phone = phone;
         }
 
-        public string id
+        public int id
         {
             get { return _id; }
             set { _id = value; }
@@ -43,7 +53,7 @@ namespace cars_manager
         public int phone
         {
             get { return _phone; }
-
+            set { _phone = value; }
         }
 
         public string UserInfo()
@@ -54,6 +64,11 @@ namespace cars_manager
             text += "Password " + email + "\n";
             text += "Phone " + phone + "\n";
             return text;
+        }
+
+        public string ToSave()
+        {
+            return this._id + "," + this._email + "," + this._password + "," + this._phone;
         }
     }
 }

@@ -18,17 +18,69 @@ namespace cars_manager
 
         public void LoadData()
         {
-            User User1 = new User("1", "rares@yahoo.com", "ghndg", 07457657);
-            User User2 = new User("2", "radu@gmail.com", "gdnjhcgn", 0775675);
-            User User3 = new User("3", "antonia@gmail.com", "sryjtrr", 0765756);
-            User User4 = new User("4", "marius@gmail.com", "yhdw", 07675675);
-            User User5 = new User("5", "beatrice@gmail.com", "dtyhd", 07485684);
+            try
+            {
+                using(StreamReader sr = new StreamReader(this.GetFilePath()))
+                {
+                    string line = "";
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        User user = new User(line);
+                        this._UserS.Add(user);
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
 
-            this._UserS.Add(User1);
-            this._UserS.Add(User2);
-            this._UserS.Add(User3);
-            this._UserS.Add(User4);
-            this._UserS.Add(User5);
+        private String GetFilePath()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+
+            string folder = Path.Combine(currentDirectory, "data");
+
+            string data = Path.Combine(folder, "users");
+
+            return data;
+        }
+
+        public string ToSaveAll()
+        {
+            String save = "";
+
+            for(int i = 0; i < _UserS.Count-1; i++)
+            {
+                save += _UserS[i].ToSave() + "\n";
+            }
+
+            save += _UserS[_UserS.Count - 1].ToSave();
+
+            return save;
+        }
+
+
+        public void SaveData()
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(this.GetFilePath()))
+                {
+                    sw.Write(ToSaveAll());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        public void GenerateNr()
+        {
+            Random rnd = new Random();
+
+            int randomNumber = rnd.Next(1, 10000000);
         }
 
         public void AfisareUser()
@@ -38,5 +90,6 @@ namespace cars_manager
                 Console.WriteLine(x.UserInfo());
             }
         }
-    }
+
+    }   
 }
