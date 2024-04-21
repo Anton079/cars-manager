@@ -91,5 +91,24 @@ namespace cars_manager
             }
         }
 
+        public int FindUserById(int id)
+        {
+            foreach(User x in _UserS)
+            {
+                return id;
+            }
+            return -1;
+        }
+
+        public bool AddUser(User user)
+        {
+            if(FindUserById(user.Id) == -1)
+            {
+                this._UserS.Add(user);
+                return true;
+            }
+            return false;
+        }
+
     }   
 }
